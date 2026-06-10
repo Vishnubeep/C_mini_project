@@ -279,3 +279,4 @@ void deleteShape()
 
     redrawCanvas();
 }
+
