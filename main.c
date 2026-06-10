@@ -253,3 +253,29 @@ void addShape()
 
     redrawCanvas();
 }
+void deleteShape()
+{
+    int index;
+
+    if(objectCount == 0)
+    {
+        printf("No objects available.\n");
+        return;
+    }
+
+    printf("Enter object number (0 to %d): ",
+           objectCount - 1);
+
+    scanf("%d",&index);
+
+    if(index < 0 || index >= objectCount)
+    {
+        printf("Invalid object.\n");
+        return;
+    }
+
+    objects[index] = objects[objectCount - 1];
+    objectCount--;
+
+    redrawCanvas();
+}
