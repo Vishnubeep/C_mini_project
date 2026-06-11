@@ -279,4 +279,138 @@ void deleteShape()
 
     redrawCanvas();
 }
+void modifyShape()
+{
+    int index;
 
+    if(objectCount == 0)
+    {
+        printf("No objects available.\n");
+        return;
+    }
+
+    printf("Enter object number (0 to %d): ",
+           objectCount - 1);
+
+    scanf("%d",&index);
+
+    if(index < 0 || index >= objectCount)
+    {
+        printf("Invalid object.\n");
+        return;
+    }
+
+    Shape *s = &objects[index];
+
+    switch(s->type)
+    {
+        case 1:
+            printf("New x1 y1 x2 y2: ");
+            scanf("%d%d%d%d",
+                  &s->x1,&s->y1,
+                  &s->x2,&s->y2);
+            break;
+
+        case 2:
+            printf("New row col width height: ");
+            scanf("%d%d%d%d",
+                  &s->x1,&s->y1,
+                  &s->width,&s->height);
+            break;
+
+        case 3:
+            printf("New row col size: ");
+            scanf("%d%d%d",
+                  &s->x1,&s->y1,
+                  &s->size);
+            break;
+
+        case 4:
+            printf("New centerRow centerCol radius: ");
+            scanf("%d%d%d",
+                  &s->x1,&s->y1,
+                  &s->radius);
+            break;
+    }
+
+    redrawCanvas();
+}
+
+/* ---------- List Objects ---------- */
+
+void listObjects()
+{
+    int i;
+
+    printf("\nStored Objects\n");
+
+    for(i = 0; i < objectCount; i++)
+    {
+        printf("%d -> ", i);
+
+        if(objects[i].type == 1)
+            printf("Line\n");
+        else if(objects[i].type == 2)
+            printf("Rectangle\n");
+        else if(objects[i].type == 3)
+            printf("Triangle\n");
+        else if(objects[i].type == 4)
+            printf("Circle\n");
+    }
+}
+
+/* ---------- Main ---------- */
+
+int main()
+{
+    int choice;
+
+    clearCanvas();
+
+    do
+    {
+        printf("\n===== 2D GRAPHICS EDITOR =====\n");
+        printf("1. Add Shape\n");
+        printf("2. Delete Shape\n");
+        printf("3. Modify Shape\n");
+        printf("4. Display Canvas\n");
+        printf("5. List Objects\n");
+        printf("0. Exit\n");
+
+        printf("Enter choice: ");
+        scanf("%d",&choice);
+
+        switch(choice)
+        {
+            case 1:
+                addShape();
+                break;
+
+            case 2:
+                deleteShape();
+                break;
+
+            case 3:
+                modifyShape();
+                break;
+
+            case 4:
+                displayCanvas();
+                break;
+
+            case 5:
+                listObjects();
+                break;
+
+            case 0:
+                printf("Exiting...\n");
+                break;
+
+            default:
+                printf("Invalid choice.\n");
+        }
+
+    } while(choice != 0);
+
+    return 0;
+}
